@@ -5,6 +5,7 @@ body {
 img {
     height: 432px;
     width: 432px;
+    opacity: 80%;
 }
 
 iframe {
