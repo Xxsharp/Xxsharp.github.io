@@ -1,5 +1,6 @@
 body {
     background-color: rgba(219, 162, 38, 0.904);
+    background-image: url("https://sm.mashable.com/t/mashable_in/feature/3/368-episod/368-episodes-later-kakashis-face-revealed-in-naruto-shippude_vrrk.960.jpg")
 }
 
 img {
@@ -11,4 +12,9 @@ img {
 
 iframe {
     width: 432px;
+}
+
+.jk {
+    display: flex;
+    justify-content: center;
 }
