@@ -1,6 +1,14 @@
-#grid>*>* {
-    border: 1px solid rgb(0, 0, 0);
+.box {
+    border: 1px solid rgb(255, 0, 0);
     padding: 30px;
     display: inline-block;
     margin: 0%;
+}
+
+.selected {
+    background-color: rgb(60, 178, 217);
+}
+
+body {
+    background-color: darkslategrey;
 }
