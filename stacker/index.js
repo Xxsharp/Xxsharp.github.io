@@ -1,8 +1,8 @@
 function main() {
     clone("box")
     clone("row")
-    var button = document.getElementById("button")
-    button.onclick = click
+    run()
+
     var julius = document.getElementById("julius")
     julius.onclick = juliuss
 }
@@ -39,7 +39,7 @@ var rowNumber = 0
 var columnNumber = 0
 var isForward = true
 
-function click() {
+function run() {
     selectBoxes(rowNumber, columnNumber, 1)
     if (isForward) {
         columnNumber++
@@ -52,11 +52,16 @@ function click() {
             isForward = true
         }
     }
-    setTimeout(click, 174)
+    var speed = (75 * rowNumber + 300 * (9 - rowNumber)) / 9
+    setTimeout(run, speed)
 }
 
 function juliuss() {
     rowNumber = (rowNumber + 1) % 10
-
+    if (rowNumber === 0) {
+        for (var i = 0; i < 10; i++) {
+            selectBoxes(i, 0, 0)
+        }
+    }
 }
 document.addEventListener("DOMContentLoaded", main)
