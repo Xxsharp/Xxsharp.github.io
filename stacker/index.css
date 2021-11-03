@@ -3,6 +3,10 @@
     flex-direction: column;
 }
 
+.row {
+    display: flex
+}
+
 .box {
     border: 1px solid rgb(0, 0, 0);
     padding: 30px;

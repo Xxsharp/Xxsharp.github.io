@@ -1,15 +1,25 @@
+var numRows = 12
+var numColumns = 12
+var minSpeed = 20 // 100
+var maxSpeed = 20 // 222
+var timeBeforeNewGame = 1500
+
+var rowNumber = 0
+var columnNumber = 0
+var isForward = true
+
 function main() {
-    clone("box")
-    clone("row")
+    clone("box", numColumns)
+    clone("row", numRows)
     run()
 
     var julius = document.getElementById("julius")
-    julius.onclick = juliuss
+    julius.onmousedown = juliuss
 }
 
-function clone(className) {
+function clone(className, numCopies) {
     var element = document.getElementsByClassName(className)[0]
-    for (var i = 1; i < 10; i++) {
+    for (var i = 1; i < numCopies; i++) {
         var clone = element.cloneNode(true)
         var parent = element.parentElement
         parent.appendChild(clone)
@@ -24,7 +34,7 @@ function selectBox(rowNumber, columnNumber) {
 
 function clearRow(rowNumber) {
     var row = document.getElementsByClassName("row")[rowNumber]
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < numColumns; i++) {
         row.children[i].classList.remove("selected")
     }
 }
@@ -35,15 +45,16 @@ function selectBoxes(rowNumber, columnNumber, numBoxes) {
         selectBox(rowNumber, columnNumber + i)
     }
 }
-var rowNumber = 0
-var columnNumber = 0
-var isForward = true
 
 function run() {
+    if (rowNumber >= numRows) {
+        setTimeout(newGame, timeBeforeNewGame)
+        return
+    }
     selectBoxes(rowNumber, columnNumber, 1)
     if (isForward) {
         columnNumber++
-        if (columnNumber === 9) {
+        if (columnNumber === numColumns - 1) {
             isForward = false
         }
     } else {
@@ -52,16 +63,21 @@ function run() {
             isForward = true
         }
     }
-    var speed = (75 * rowNumber + 300 * (9 - rowNumber)) / 9
+    var factor = 10000
+    var speed = (factor / maxSpeed * rowNumber + factor / minSpeed * (numRows - 1 - rowNumber)) / (numRows - 1)
     setTimeout(run, speed)
 }
 
 function juliuss() {
-    rowNumber = (rowNumber + 1) % 10
-    if (rowNumber === 0) {
-        for (var i = 0; i < 10; i++) {
-            selectBoxes(i, 0, 0)
-        }
+    rowNumber++
+
+}
+
+function newGame() {
+    for (var i = 0; i < numColumns; i++) {
+        selectBoxes(i, 0, 0)
     }
+    rowNumber = 0
+    run()
 }
 document.addEventListener("DOMContentLoaded", main)
