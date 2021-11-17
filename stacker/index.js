@@ -1,12 +1,12 @@
 var numRows = 12
 var numColumns = 12
-var minSpeed = 20 // 100
-var maxSpeed = 20 // 222
+var minSpeed = 100
+var maxSpeed = 222
 var timeBeforeNewGame = 1500
 
-var rowNumber = 0
-var columnNumber = 0
-var isForward = true
+var rowNumber
+var columnNumber
+var isForward
 
 function main() {
     clone("box", numColumns)
@@ -74,10 +74,13 @@ function juliuss() {
 }
 
 function newGame() {
+    rowNumber = 0
+    columnNumber = 0
+    isForward = true
     for (var i = 0; i < numColumns; i++) {
         selectBoxes(i, 0, 0)
     }
-    rowNumber = 0
+
     run()
 }
 document.addEventListener("DOMContentLoaded", main)
