@@ -7,11 +7,13 @@ var timeBeforeNewGame = 1500
 var rowNumber
 var columnNumber
 var isForward
+var numBoxes
+var target
 
 function main() {
     clone("box", numColumns)
     clone("row", numRows)
-    run()
+    newGame()
 
     var julius = document.getElementById("julius")
     julius.onmousedown = juliuss
@@ -51,10 +53,10 @@ function run() {
         setTimeout(newGame, timeBeforeNewGame)
         return
     }
-    selectBoxes(rowNumber, columnNumber, 1)
+    selectBoxes(rowNumber, columnNumber, numBoxes)
     if (isForward) {
         columnNumber++
-        if (columnNumber === numColumns - 1) {
+        if (columnNumber === numColumns - numBoxes) {
             isForward = false
         }
     } else {
@@ -70,13 +72,20 @@ function run() {
 
 function juliuss() {
     rowNumber++
+    if (target !== null) {
 
+
+
+    }
+    target = columnNumber
 }
 
 function newGame() {
     rowNumber = 0
     columnNumber = 0
     isForward = true
+    numBoxes = 6
+    target = null
     for (var i = 0; i < numColumns; i++) {
         selectBoxes(i, 0, 0)
     }
