@@ -1,7 +1,7 @@
 var numRows = 12
 var numColumns = 12
-var minSpeed = 50 //100
-var maxSpeed = 100 //222
+var minSpeed = 100
+var maxSpeed = 222
 var timeBeforeNewGame = 1500
 var startingNumBoxes = 4;
 
