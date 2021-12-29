@@ -1,4 +1,4 @@
-.grid {
+#grid {
     display: inline-flex;
     flex-direction: column;
 }
@@ -24,4 +24,5 @@ body {
 
 #julius {
     cursor: pointer;
+    vertical-align: top;
 }
