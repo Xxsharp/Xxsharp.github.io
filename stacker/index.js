@@ -4,6 +4,7 @@ var minSpeed = 100
 var maxSpeed = 222
 var timeBeforeNewGame = 1500
 var startingNumBoxes = 4;
+var loseBlocksSpeed = 100
 
 var rowNumber
 var columnNumber
@@ -96,7 +97,7 @@ function juliuss() {
         } else if (columnNumber > target) {
             blocksToLose = columnNumber - target
             numBoxes -= blocksToLose
-            loseBlocks(blocksToLose, columnNumber + numBlocks)
+            loseBlocks(blocksToLose, columnNumber + numBoxes)
         }
     }
     console.log(numBoxes)
@@ -106,7 +107,7 @@ function juliuss() {
 }
 
 function loseBlocks(blocksToLose, columnNumber) {
-    return
+
     loseBlocksHelper(blocksToLose, columnNumber, rowNumber)
 }
 
@@ -115,7 +116,7 @@ function loseBlocksHelper(blocksToLose, columnNumber, rowNumber) {
         if (rowNumber > 0) unselectBox(rowNumber - 1, columnNumber + i)
         if (rowNumber < numRows) selectBox(rowNumber, columnNumber + i)
     }
-    if (rowNumber === numRows - 1) return
+    if (rowNumber === numRows) return
     var factor = 10000
     setTimeout(() => loseBlocksHelper(blocksToLose, columnNumber, rowNumber + 1), factor / loseBlocksSpeed)
 }
