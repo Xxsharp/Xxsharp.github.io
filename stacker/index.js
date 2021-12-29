@@ -36,10 +36,15 @@ function selectBox(rowNumber, columnNumber) {
 }
 
 function clearRow(rowNumber) {
-    var row = document.getElementsByClassName("row")[rowNumber]
     for (var i = 0; i < numColumns; i++) {
-        row.children[i].classList.remove("selected")
+        unselectBox(rowNumber, i)
     }
+}
+
+function unselectBox(rowNumber, columnNumber) {
+    var row = document.getElementsByClassName("row")[rowNumber]
+    var box = row.getElementsByClassName("box")[columnNumber]
+    box.classList.remove("selected")
 }
 
 function selectBoxes(rowNumber, columnNumber, numBoxes) {
@@ -82,11 +87,16 @@ function run() {
 function juliuss() {
     console.log(target, columnNumber, rowNumber)
     if (target !== null) {
+        var blocksToLose = null;
         if (columnNumber < target) {
-            numBoxes -= target - columnNumber
+            blocksToLose = target - columnNumber
+            numBoxes -= blocksToLose
+            loseBlocks(blocksToLose, columnNumber)
             columnNumber = target
         } else if (columnNumber > target) {
-            numBoxes -= columnNumber - target
+            blocksToLose = columnNumber - target
+            numBoxes -= blocksToLose
+            loseBlocks(blocksToLose, columnNumber + numBlocks)
         }
     }
     console.log(numBoxes)
@@ -94,6 +104,22 @@ function juliuss() {
     selectBoxes(rowNumber, columnNumber, numBoxes)
     rowNumber--
 }
+
+function loseBlocks(blocksToLose, columnNumber) {
+    return
+    loseBlocksHelper(blocksToLose, columnNumber, rowNumber)
+}
+
+function loseBlocksHelper(blocksToLose, columnNumber, rowNumber) {
+    for (var i = 0; i < blocksToLose; i++) {
+        if (rowNumber > 0) unselectBox(rowNumber - 1, columnNumber + i)
+        if (rowNumber < numRows) selectBox(rowNumber, columnNumber + i)
+    }
+    if (rowNumber === numRows - 1) return
+    var factor = 10000
+    setTimeout(() => loseBlocksHelper(blocksToLose, columnNumber, rowNumber + 1), factor / loseBlocksSpeed)
+}
+
 
 function newGame() {
     rowNumber = numRows - 1
