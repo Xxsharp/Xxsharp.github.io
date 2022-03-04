@@ -80,8 +80,12 @@ function flip() {
 document.getElementById("flip").onclick = flip
 
 function slap() {
-    hand.push(...middle.splice(0))
-    render()
+    var topcard = middle[middle.length - 1]
+    var secondcard = middle[middle.length - 2]
+    if (topcard[0] === secondcard[0]) {
+        hand.unshift(...middle.splice(0).reverse())
+        render()
+    } else { alert("you are not supposed to slap") }
 }
 document.getElementById("slap").onclick = slap
 
