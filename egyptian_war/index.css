@@ -4,3 +4,12 @@
     border-radius: 25px;
     border: black solid 2px;
 }
+
+span>div {
+    display: inline-block;
+}
+
+span {
+    display: inline-flex;
+    flex-direction: column
+}
