@@ -54,8 +54,11 @@ var deck = [
 ]
 
 function main() {
-    hand = shuffle(deck)
+    var shuffled = shuffle(deck)
+    p1hand = shuffled.slice(0, shuffled.length / 2)
+    p2hand = shuffled.slice(shuffled.length / 2)
     middle = []
+    isPlayerOneTurn = true
     render()
 }
 
@@ -63,31 +66,108 @@ function main() {
 function render() {
     var card = middle[middle.length - 1]
     document.getElementById("middle").innerText = middle.length === 0 ? "<empty>" : card
-    document.getElementById("hand").innerText = hand.length
+    document.getElementById("p1hand").innerText = p1hand.length
+    document.getElementById("p2hand").innerText = p2hand.length
     var filename = card === undefined ? "./img/card.jpeg" : `./img/SVG-cards/${card}.svg`
     document.getElementById("middle_card").src = filename
+    if (p2hand.length === 0) {
+        alert("player 1 wins ")
+    }
+    if (p1hand.length === 0) {
+        alert("player 2 wins ")
+    }
 }
 
-function flip() {
-    if (hand.length === 0) {
+function p1() {
+    if (isPlayerOneTurn === false) {
+        alert("it is not your turn !@#$%^&*(*&^%")
+        return
+    }
+    if (p1hand.length === 0) {
         alert("you have no cards (:")
         return
     }
-    var card = hand.pop()
+    isPlayerOneTurn = false
+    var card = p1hand.pop()
+    middle.push(card)
+    render()
+
+}
+document.getElementById("p1flip").onclick = p1
+
+function p2() {
+    if (isPlayerOneTurn === true) {
+        alert("it is not your turn 1000%")
+        return
+    }
+
+    if (p2hand.length === 0) {
+        alert("you have no cards (:")
+        return
+    }
+    isPlayerOneTurn = true
+    var card = p2hand.pop()
     middle.push(card)
     render()
 }
-document.getElementById("flip").onclick = flip
+document.getElementById("p2flip").onclick = p2
 
-function slap() {
+function p1slap() {
     var topcard = middle[middle.length - 1]
     var secondcard = middle[middle.length - 2]
+    if (!secondcard) return
     if (topcard[0] === secondcard[0]) {
-        hand.unshift(...middle.splice(0).reverse())
+        p1hand.unshift(...middle.splice(0).reverse())
         render()
-    } else { alert("you are not supposed to slap") }
+    } else {
+        alert("you are not supposed to slap")
+        if (p1hand.length > 0) {
+            var card = p1hand.pop()
+            middle.unshift(card)
+            render()
+        }
+    }
 }
-document.getElementById("slap").onclick = slap
+
+function p2slap() {
+    var topcard = middle[middle.length - 1]
+    var secondcard = middle[middle.length - 2]
+    if (!secondcard) return
+    if (topcard[0] === secondcard[0]) {
+        p2hand.unshift(...middle.splice(0).reverse())
+        render()
+    } else {
+        alert("you are not supposed to slap")
+        if (p2hand.length > 0) {
+            var card = p2hand.pop()
+            middle.unshift(card)
+            render()
+        }
+
+    }
+}
+document.getElementById("p1slap").onclick = p1slap
+document.getElementById("p2slap").onclick = p2slap
+document.getElementById("refresh").onclick = main
+
+function keydown(e) {
+    if (e.key === "q") {
+        p1()
+    }
+
+    if (e.key === "w") {
+        p1slap()
+    }
+    if (e.key === "o") {
+        p2()
+    }
+
+    if (e.key === "p") {
+        p2slap()
+    }
+
+}
+document.addEventListener('keydown', keydown, false);
 
 function shuffle(arr) {
     arr = arr.slice()
