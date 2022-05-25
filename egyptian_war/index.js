@@ -1,58 +1,3 @@
-var deck = [
-    "2_of_hearts",
-    "2_of_diamonds",
-    "2_of_clubs",
-    "2_of_spades",
-    "3_of_hearts",
-    "3_of_diamonds",
-    "3_of_clubs",
-    "3_of_spades",
-    "4_of_hearts",
-    "4_of_diamonds",
-    "4_of_clubs",
-    "4_of_spades",
-    "5_of_hearts",
-    "5_of_diamonds",
-    "5_of_clubs",
-    "5_of_spades",
-    "6_of_hearts",
-    "6_of_diamonds",
-    "6_of_clubs",
-    "6_of_spades",
-    "7_of_hearts",
-    "7_of_diamonds",
-    "7_of_clubs",
-    "7_of_spades",
-    "8_of_hearts",
-    "8_of_diamonds",
-    "8_of_clubs",
-    "8_of_spades",
-    "9_of_hearts",
-    "9_of_diamonds",
-    "9_of_clubs",
-    "9_of_spades",
-    "10_of_hearts",
-    "10_of_diamonds",
-    "10_of_clubs",
-    "10_of_spades",
-    "jack_of_hearts",
-    "jack_of_diamonds",
-    "jack_of_clubs",
-    "jack_of_spades",
-    "queen_of_hearts",
-    "queen_of_diamonds",
-    "queen_of_clubs",
-    "queen_of_spades",
-    "king_of_hearts",
-    "king_of_diamonds",
-    "king_of_clubs",
-    "king_of_spades",
-    "ace_of_hearts",
-    "ace_of_diamonds",
-    "ace_of_clubs",
-    "ace_of_spades",
-]
-
 function main() {
     var shuffled = shuffle(deck)
     p1hand = shuffled.slice(0, shuffled.length / 2)
@@ -78,73 +23,56 @@ function render() {
     }
 }
 
-function p1() {
-    if (isPlayerOneTurn === false) {
+function flip(isYourTurn, hand) {
+    if (!isYourTurn) {
         alert("it is not your turn !@#$%^&*(*&^%")
         return
     }
-    if (p1hand.length === 0) {
+    if (hand.length === 0) {
         alert("you have no cards (:")
         return
     }
-    isPlayerOneTurn = false
-    var card = p1hand.pop()
+    isPlayerOneTurn = !isPlayerOneTurn
+    var card = hand.pop()
     middle.push(card)
     render()
 
 }
-document.getElementById("p1flip").onclick = p1
 
-function p2() {
-    if (isPlayerOneTurn === true) {
-        alert("it is not your turn 1000%")
-        return
-    }
-
-    if (p2hand.length === 0) {
-        alert("you have no cards (:")
-        return
-    }
-    isPlayerOneTurn = true
-    var card = p2hand.pop()
-    middle.push(card)
-    render()
+function p1flip() {
+    flip(isPlayerOneTurn, p1hand)
 }
-document.getElementById("p2flip").onclick = p2
+document.getElementById("p1flip").onclick = p1flip
 
-function p1slap() {
+function p2flip() {
+    flip(!isPlayerOneTurn, p2hand)
+}
+document.getElementById("p2flip").onclick = p2flip
+
+
+function slap(hand) {
     var topcard = middle[middle.length - 1]
     var secondcard = middle[middle.length - 2]
     if (!secondcard) return
     if (topcard[0] === secondcard[0]) {
-        p1hand.unshift(...middle.splice(0).reverse())
+        hand.unshift(...middle.splice(0).reverse())
         render()
     } else {
         alert("you are not supposed to slap")
-        if (p1hand.length > 0) {
-            var card = p1hand.pop()
+        if (hand.length > 0) {
+            var card = hand.pop()
             middle.unshift(card)
             render()
         }
     }
+}
+
+function p1slap() {
+    slap(p1hand)
 }
 
 function p2slap() {
-    var topcard = middle[middle.length - 1]
-    var secondcard = middle[middle.length - 2]
-    if (!secondcard) return
-    if (topcard[0] === secondcard[0]) {
-        p2hand.unshift(...middle.splice(0).reverse())
-        render()
-    } else {
-        alert("you are not supposed to slap")
-        if (p2hand.length > 0) {
-            var card = p2hand.pop()
-            middle.unshift(card)
-            render()
-        }
-
-    }
+    slap(p2hand)
 }
 document.getElementById("p1slap").onclick = p1slap
 document.getElementById("p2slap").onclick = p2slap
@@ -152,14 +80,14 @@ document.getElementById("refresh").onclick = main
 
 function keydown(e) {
     if (e.key === "q") {
-        p1()
+        p1flip()
     }
 
     if (e.key === "w") {
         p1slap()
     }
     if (e.key === "o") {
-        p2()
+        p2flip()
     }
 
     if (e.key === "p") {
