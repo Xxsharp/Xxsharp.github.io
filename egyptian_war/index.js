@@ -53,6 +53,18 @@ document.getElementById("p2flip").onclick = p2flip
 function slap(hand) {
     var topcard = middle[middle.length - 1]
     var secondcard = middle[middle.length - 2]
+    var thirdcard = middle[middle.length - 3]
+    if (!topcard)
+        return
+    if (thirdcard !== undefined) {
+
+
+        if (thirdcard[0] === topcard[0]) {
+            hand.unshift(...middle.splice(0).reverse())
+            render()
+            return
+        }
+    }
     if (!secondcard) return
     if (topcard[0] === secondcard[0]) {
         hand.unshift(...middle.splice(0).reverse())
