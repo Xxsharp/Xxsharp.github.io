@@ -15,6 +15,13 @@ function render() {
     document.getElementById("p2hand").innerText = p2hand.length
     var filename = card === undefined ? "./img/card.jpeg" : `./img/SVG-cards/${card}.svg`
     document.getElementById("middle_card").src = filename
+        //update player turn
+        //if it's not player 1 turn then make it say player two's turn
+    if (!isPlayerOneTurn) {
+        document.getElementById("myturn").innerText = "p2"
+    } else {
+        document.getElementById("myturn").innerText = "p1"
+    }
     if (p2hand.length === 0) {
         alert("player 1 wins ")
     }

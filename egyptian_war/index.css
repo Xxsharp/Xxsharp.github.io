@@ -2,7 +2,7 @@
     width: 200px;
     height: 280px;
     border-radius: 25px;
-    border: black solid 2px;
+    border: rgb(3, 59, 25) solid 2px;
 }
 
 span>div {
@@ -12,4 +12,10 @@ span>div {
 span {
     display: inline-flex;
     flex-direction: column
+}
+
+body {
+    color: rgb(255, 221, 0);
+    background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/CairoEgMuseumTaaMaskMostlyPhotographed.jpg/258px-CairoEgMuseumTaaMaskMostlyPhotographed.jpg);
+    background-size: cover;
 }
