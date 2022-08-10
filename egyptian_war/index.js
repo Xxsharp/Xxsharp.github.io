@@ -4,6 +4,7 @@ function main() {
     p2hand = shuffled.slice(shuffled.length / 2)
     middle = []
     isPlayerOneTurn = true
+    isRoyalMode = false
     render()
 }
 
@@ -42,8 +43,25 @@ function flip(isYourTurn, hand) {
     isPlayerOneTurn = !isPlayerOneTurn
     var card = hand.pop()
     middle.push(card)
+    maybeHandleRoyal(card)
     render()
 
+}
+
+function maybeHandleRoyal(card) {
+    if (card[0] === "j") {
+        alert(" one chance ")
+        isRoyalMode = true
+    } else {
+        if (isRoyalMode) {
+            //the person that played the jax gets all the cards from the middle
+            if (isPlayerOneTurn) {
+                takeCards(p1hand)
+            } else {
+                takeCards(p2hand)
+            }
+        }
+    }
 }
 
 function p1flip() {
@@ -56,6 +74,9 @@ function p2flip() {
 }
 document.getElementById("p2flip").onclick = p2flip
 
+function takeCards(hand) {
+    hand.unshift(...middle.splice(0).reverse())
+}
 
 function slap(hand) {
     var topcard = middle[middle.length - 1]
@@ -67,14 +88,14 @@ function slap(hand) {
 
 
         if (thirdcard[0] === topcard[0]) {
-            hand.unshift(...middle.splice(0).reverse())
+            takeCards(hand)
             render()
             return
         }
     }
     if (!secondcard) return
     if (topcard[0] === secondcard[0]) {
-        hand.unshift(...middle.splice(0).reverse())
+        takeCards(hand)
         render()
     } else {
         alert("you are not supposed to slap")
