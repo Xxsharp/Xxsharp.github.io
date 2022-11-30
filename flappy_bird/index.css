@@ -1,0 +1,19 @@
+body {
+    margin: 0;
+}
+
+#rules {
+    position: absolute;
+    margin: 15px;
+}
+
+#game {
+    background: url(assets/background.png);
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+}
+
+img {
+    background-color: transparent;
+}
