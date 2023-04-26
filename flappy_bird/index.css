@@ -35,6 +35,7 @@ img {
 }
 
 #icon {
-    width: 30px;
+    width: 80px;
     position: absolute;
+    left: 50%;
 }

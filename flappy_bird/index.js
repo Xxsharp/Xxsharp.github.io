@@ -20,6 +20,7 @@ function main() {
 
 function flap() {
     velocity = flapStrength
+    console.log("flap", getBottom())
 }
 
 function fall() {
@@ -29,8 +30,11 @@ function fall() {
     if (newPosition < 0) {
         clearInterval(interval)
         alert("you lose!")
+        return
     }
     icon.style.bottom = newPosition;
+    var rotate = -velocity / 1
+    icon.style.transform = `rotate(${rotate}deg)`
 }
 
 function getBottom() {
