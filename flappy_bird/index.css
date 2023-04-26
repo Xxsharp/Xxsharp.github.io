@@ -16,4 +16,25 @@ body {
 
 img {
     background-color: transparent;
+    width: 15px;
+}
+
+#pipe1 {
+    width: 350px;
+    left: 500px;
+    position: absolute;
+    bottom: 0px;
+}
+
+#pipe2 {
+    width: 350px;
+    left: 500px;
+    position: absolute;
+    top: 0px;
+    transform: scaleY(-1);
+}
+
+#icon {
+    width: 30px;
+    position: absolute;
 }

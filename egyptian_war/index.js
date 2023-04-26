@@ -6,14 +6,13 @@ function main() {
     isPlayerOneTurn = true
     isRoyalMode = false
     chances = 0
-    recent = undefined
     render()
 }
 
 
 function render() {
     var card = middle[middle.length - 1]
-    document.getElementById("middle").innerText = recent === undefined ? "beginning" : recent
+    document.getElementById("middle").innerText = middle.length === 0 ? "<empty>" : card
     document.getElementById("p1hand").innerText = p1hand.length
     document.getElementById("p2hand").innerText = p2hand.length
     var filename = card === undefined ? "./img/card.jpeg" : `./img/SVG-cards/${card}.svg`
@@ -44,7 +43,6 @@ function flip(isYourTurn, hand) {
     }
     isPlayerOneTurn = !isPlayerOneTurn
     var card = hand.pop()
-    recent = card
     middle.push(card)
     maybeHandleRoyal(card)
     render()
@@ -52,27 +50,28 @@ function flip(isYourTurn, hand) {
 }
 
 function maybeHandleRoyal(card) {
-
+    console.log(card)
+    console.log(middle)
     if (card[0] === "j") {
-       
+        alert(" one chance ")
         isRoyalMode = true
         chances = 1
     } else if (card[0] === "q") {
-       
+        alert(" two chances ")
         isRoyalMode = true
         chances = 2
     } else if (card[0] === "k") {
-       
+        alert(" three chances ")
         isRoyalMode = true
         chances = 3
     } else if (card[0] === "a") {
+        alert(" four chances ")
         isRoyalMode = true
         chances = 4
     } else {
 
         if (isRoyalMode) {
             if (chances === 1) {
-                isRoyalMode = false
                 if (isPlayerOneTurn) {
                     takeCards(p1hand)
                 } else {
@@ -81,14 +80,13 @@ function maybeHandleRoyal(card) {
                 }
             } else {
                 chances = chances - 1
-                isPlayerOneTurn= !isPlayerOneTurn
+                    //let p2 have his turn
             }
 
 
         }
     }
- 
- 
+    console.log(middle)
 }
 
 function p1flip() {
@@ -116,7 +114,6 @@ function slap(hand) {
 
         if (thirdcard[0] === topcard[0]) {
             takeCards(hand)
-            isRoyalMode = false
             render()
             return
         }
@@ -124,7 +121,6 @@ function slap(hand) {
     if (!secondcard) return
     if (topcard[0] === secondcard[0]) {
         takeCards(hand)
-        isRoyalMode = false
         render()
     } else {
         alert("you are not supposed to slap")
