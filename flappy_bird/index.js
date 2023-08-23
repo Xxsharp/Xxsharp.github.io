@@ -34,13 +34,58 @@ visualConfig = {
     maxRotateDeg: 120,
     rotateThreshold: 180,
 };
+[
+    config,
+    state,
+    visualConfig,
+    renderElements,
+    updateBird,
+    ready,
+    assignButtons,
+    startTick,
+    flap,
+    tick,
+    updatePipes,
+    isHittingAPipe,
+    draw,
+    getRotate,
+    endGame,
+    startGame,
+    makeFirstPipe,
+    drawPipes,
+    drawPipe,
+    drawScore,
+    drawBird,
+    maybeMakeNewPipe
+]
 
 function ready() {
     renderElements()
+    assignButtons()
     draw()
-    var intervalId = window.setInterval(function() {
-        tick()
-    }, visualConfig.tick * 1000);
     startGame()
+    startTick()
+}
 
+function assignButtons() {
+    //when the space button is pressed the brid flaps and the mouse button when clicked it restarts the game.
+    document.body.onkeydown = function(e) {
+        if (e.key == " " ||
+            e.code == "Space" ||
+            e.keyCode == 32
+        ) {
+            flap()
+        }
+    }
+    document.body.onkeydown = function(e) {
+        if (e.key == " " ||
+            e.code == "" ||
+            e.keyCode == 32
+        ) {
+            flap()
+        }
+    }
+    document.body.onclick = function(e) {
+        startGame()
+    }
 }
