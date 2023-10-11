@@ -1,6 +1,6 @@
 config = {
     "gravity": 1400,
-    "power": 450,
+    "power": 540,
     "pipeSpeed": 600,
     "pipeVerticalGapPx": 120,
     "birdSize": 40,
@@ -88,4 +88,46 @@ function assignButtons() {
     document.body.onclick = function(e) {
         startGame()
     }
+}
+
+function startTick() {
+    setInterval(tick, 1)
+
+}
+
+function tick() {
+    //the pipes have to move the bird the background and the score 
+    if (!state.gameIsRunning) {
+        return
+    }
+    maybeMakeNewPipe()
+    updatePipes()
+    drawPipes()
+    updateBird()
+    drawBird()
+    state.score += 0.05
+    drawScore()
+    if (isHittingAPipe()) {
+        endGame()
+    }
+    if (state.altitude < 0) {
+        endGame()
+    }
+
+
+
+}
+
+function startGame() {
+    state.gameIsRunning = true
+    flap()
+    state.pipes = []
+    state.altitude = 0
+    state.score = 0
+
+}
+
+function drawScore() {
+    var scorediv = document.getElementById("score")
+    scorediv.innerText = state.score.toFixed(2)
 }
